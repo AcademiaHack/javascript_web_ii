@@ -1,0 +1,19 @@
+%h1 Hobbies#edit
+%span
+  = link_to('back', person_path(@hobby.person))
+
+%br/
+= form_with(model: @hobby, local: true) do |form|
+  .field
+    = form.label :name
+    = form.text_field :name
+  .field
+    = form.label :description
+    = form.text_area :description
+  .field
+    = form.label :kind
+    = form.select :kind, options_for_select(@kinds)
+  .field
+    = form.hidden_field :person_id
+  = form.submit
+

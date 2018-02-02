@@ -1,0 +1,28 @@
+%h1 Edit Person
+%br/
+= form_with(model: @person, local: true) do |form|
+  .field
+    = form.label :name
+    = form.text_field :name
+  .field
+    = form.label :email
+    = form.email_field :email
+  .field
+    = form.label :birthdate
+    = form.date_field :birthdate
+  .field
+    = form.label :gender
+    = form.select :gender, [['Male', 'male'], ['Female', 'female'], ['unknown', 'unknown']]
+  .field
+    = form.label :dni
+    = form.number_field :dni
+  .field
+    = form.label :customer?
+    .field
+      = form.label :yes
+      = form.radio_button :customer, true
+    .field
+      = form.label :no
+      = form.radio_button :customer, false, checked: true
+  = form.submit
+

@@ -1,0 +1,63 @@
+.row
+  .col-12
+    .card{:style => "width: 18rem;"}
+      .card-body
+        %h5.card-title=@person.name
+      %ul.list-group.list-group-flush
+        %li.list-group-item
+          %p= @person.email
+          %p= @person.birthdate
+          %p= @person.gender
+          %p= @person.dni
+          %p= @person.customer
+      .card-body.text-justify
+        .btn-group{"aria-label" => "Basic example", :role => "group"}
+          = link_to('Back', people_path, class: 'btn btn-secondary')
+          = link_to('Edit', edit_person_path(@person), class: 'btn btn-secondary')
+          = link_to('Destroy', person_path(@person), method: :delete, class: 'btn btn-secondary')
+
+- if @person.hobbies.present?
+  .row
+    .col-12
+      %h3 Hobibes
+  - @person.hobbies.each do |hobby|
+    - if hobby.persisted?
+      .row.mb-5
+        .col-12
+          .card
+            .card-body
+              .card-title
+                = hobby.name
+                %span.float-right
+                  = link_to(hobby_path(hobby), style: 'color: black', method: :delete) do
+                    = fa_icon 'close'
+              .card-text
+                %p= hobby.description
+                %p= hobby.kind
+
+#exampleModal.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "exampleModalLabel", :role => "dialog", :tabindex => "-1"}
+  .modal-dialog{:role => "document"}
+    .modal-content
+      .modal-header
+        %h5#exampleModalLabel.modal-title New hobby
+        %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+          %span{"aria-hidden" => "true"} ×
+      = form_with(model: [@person, @hobby], local: true) do |form|
+        .modal-body
+          .form-group
+            = form.label :name
+            = form.text_field :name, class: 'form-control'
+          .form-group
+            = form.label :description
+            = form.text_area :description, class: 'form-control'
+          .form-group
+            = form.label :kind
+            = form.select :kind, options_for_select(Hobby.kinds.keys), {}, class: 'form-control'
+          .form-group
+            = form.hidden_field :person_id
+        .modal-footer
+          %button.btn.btn-secondary{"data-dismiss" => "modal", :type => "button"} Close
+          = form.submit class: 'btn btn-primary'
+
+%button.btn.btn-primary{"data-target" => "#exampleModal", "data-toggle" => "modal", :type => "button"}
+  New Hobby

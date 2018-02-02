@@ -1,0 +1,42 @@
+.row
+  %h1 New Person
+= form_with(model: @person, local: true) do |form|
+  .row
+    .col
+      .form-group
+        = form.label :name
+        = form.text_field :name, class: 'form-control'
+      .form-group
+        = form.label :email
+        = form.email_field :email, class: 'form-control'
+      .form-group
+        = form.label :birthdate
+        = form.date_field :birthdate, class: 'form-control'
+      .form-group
+        = form.label :gender
+        = form.select :gender, [['Male', 'male'], ['Female', 'female'], ['unknown', 'unknown']], {}, class: 'form-control'
+      .form-group
+        = form.label :dni
+        = form.number_field :dni, class: 'form-control'
+      .form-group
+        = form.label :customer?
+        .form-check
+          = form.radio_button :customer, true, class: 'form-check-input', id: 'radio1'
+          = form.label :yes, class: 'form-check-label', for: 'radio1 '
+        .form-check
+          = form.radio_button :customer, false, checked: true, class: 'form-check-input', id: 'radio2'
+          = form.label :no, class: 'form-check-label', for: 'radio2'
+      = form.submit class: 'btn btn-primary btn-block'
+    .col
+      = form.fields_for :hobbies do |hobby_fields|
+        %h3= "Hobby ##{hobby_fields.index + 1}"
+        .form-group
+          = hobby_fields.text_field :name, placeholder: 'name', class: 'form-control'
+        .form-group
+          = hobby_fields.text_area :description, placeholder: 'description', class: 'form-control'
+        .form-group
+          = hobby_fields.label :kind
+          = hobby_fields.select :kind, options_for_select(Hobby.kinds.keys), {}, class: 'form-control'
+
+
+

@@ -1,0 +1,38 @@
+.row
+  .col.text-center
+    %h1 People
+
+- if @people.empty?
+  .row
+    .col.text-center
+      %h4 No People!
+- else
+  .row
+    .col
+      %table.table
+        %thead
+          %tr
+            %th Name
+            %th Email
+            %th Birthdate
+            %th Gender
+            %th DNI
+            %th Customer?
+        %tbody
+          - @people.each do |person|
+            %tr{class: "#{person.customer ? 'table-success' : ''}"}
+              %td
+                = link_to("#{person.name}", person_path(person), style: 'text-decoration: none; color: black')
+              %td
+                = person.email
+              %td
+                = person.birthdate
+              %td
+                = person.gender
+              %td
+                = person.dni
+              %td
+                = person.customer
+.row
+  .col
+    = link_to('New Person', new_person_path, class: 'btn btn-primary')
