@@ -1,3 +1,7 @@
+.row.mb-4
+  .col-12
+    .alert.alert-primary{role: 'alert'}
+      Clase Javascript Web II 02/02/2018
 .row
   .col.text-center
     %h1 People
@@ -7,6 +11,15 @@
     .col.text-center
       %h4 No People!
 - else
+  .d-flex.flex-row-reverse.mb-2
+    .p-2
+      %form.form-inline
+        .input-group
+          .input-group-prepend
+            .input-group-text
+              = fa_icon('search')
+          = text_field :search, nil, class: 'form-control', placeholder: 'Type a name'
+        %button.btn.btn-secundary.ml-1{type: 'submit'} Search
   .row
     .col
       %table.table
@@ -18,9 +31,10 @@
             %th Gender
             %th DNI
             %th Customer?
+            %th
         %tbody
           - @people.each do |person|
-            %tr{class: "#{person.customer ? 'table-success' : ''}"}
+            %tr
               %td
                 = link_to("#{person.name}", person_path(person), style: 'text-decoration: none; color: black')
               %td
@@ -33,6 +47,15 @@
                 = person.dni
               %td
                 = person.customer
+              %td
+                .btn-group
+                  %button.btn.btn-secondary.dropdown-toggle{data: {toggle: 'dropdown'}}
+                    Actions
+                  .dropdown-menu.dropdown-menu-right
+                    %button.dropdown-item{type: 'button'} Edit
+                    .dropdown-divider
+                    %button.dropdown-item{type: 'button'} Destroy
 .row
   .col
     = link_to('New Person', new_person_path, class: 'btn btn-primary')
+    = link_to('Ajax Person', "#", class: 'btn btn-success')

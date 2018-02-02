@@ -1,15 +1,37 @@
-.row
+.row.mb-4
   .col-12
-    .card{:style => "width: 18rem;"}
+    .card.w-75
+      .card-header
+        %h5.card-title
+          =@person.name
+          %span.badge.badge-secondary
+            - if @person.customer?
+              It's customer
+            -else
+              It's not customer
       .card-body
-        %h5.card-title=@person.name
-      %ul.list-group.list-group-flush
-        %li.list-group-item
-          %p= @person.email
-          %p= @person.birthdate
-          %p= @person.gender
-          %p= @person.dni
-          %p= @person.customer
+        .row
+          .col-6
+            .form-group
+              %strong Email
+              %p.card-text
+                =@person.email
+          .col-6
+            .form-group
+              %strong Birtdate
+              %p.card-text
+                = @person.birthdate
+        .row
+          .col-6
+            .form-group
+              %strong Gender
+              %p.card-text
+                = @person.gender
+          .col-6
+            .form-group
+              %strong DNI
+              %p.card-text
+                = @person.dni
       .card-body.text-justify
         .btn-group{"aria-label" => "Basic example", :role => "group"}
           = link_to('Back', people_path, class: 'btn btn-secondary')
