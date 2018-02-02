@@ -19,9 +19,15 @@ class PeopleController < ApplicationController
   def create
     @person = Person.new(person_params)
     if @person.save
-      redirect_to person_path(@person)
+      respond_to do |format|
+        format.html { redirect_to person_path(@person) }
+        format.json { render json: @person }
+      end
     else
-      render :new
+      respond_to do |format|
+        format.html { render :new }
+        format.json { render json: @person.errors }
+      end
     end
   end
 
